@@ -1,7 +1,6 @@
-"""
-Library Management System (Python OOP)
-========================================
-"""
+### Library Management System (Python OOP)
+# Anwarul Islam Anik
+
 # 1. Person (Parent Class)
 class Person:
 
@@ -240,84 +239,79 @@ def print_menu():
     print("7. Search Book")
     print("8. Exit")
 
+#
+library = Library()
 
-def main():
-    library = Library()
+while True:
+    print_menu()
+    try:
+        choice = input("Enter your choice: ").strip()
 
-    while True:
-        print_menu()
-        try:
-            choice = input("Enter your choice: ").strip()
+        if choice == "1":
+            print("----- Add New Book -----")
+            try:
+                title = get_non_empty_input("Enter Book Title : ")
+                author = get_non_empty_input("Enter Author : ")
+                isbn = get_non_empty_input("Enter ISBN : ")
+                library.add_book(title, author, isbn)
+            except ValueError as e:
+                print(f"Error: {e}")
 
-            if choice == "1":
-                print("----- Add New Book -----")
-                try:
-                    title = get_non_empty_input("Enter Book Title : ")
-                    author = get_non_empty_input("Enter Author : ")
-                    isbn = get_non_empty_input("Enter ISBN : ")
-                    library.add_book(title, author, isbn)
-                except ValueError as e:
-                    print(f"Error: {e}")
+        elif choice == "2":
+            print("----- Register Member -----")
+            try:
+                member_id = get_non_empty_input("Enter Member ID : ")
+                name = get_non_empty_input("Enter Name : ")
+                age = get_valid_age("Enter Age : ")
+                library.register_member(member_id, name, age)
+            except ValueError as e:
+                print(f"Error: {e}")
 
-            elif choice == "2":
-                print("----- Register Member -----")
-                try:
-                    member_id = get_non_empty_input("Enter Member ID : ")
-                    name = get_non_empty_input("Enter Name : ")
-                    age = get_valid_age("Enter Age : ")
-                    library.register_member(member_id, name, age)
-                except ValueError as e:
-                    print(f"Error: {e}")
+        elif choice == "3":
+            print("------ Borrow Book ------")
+            try:
+                member_id = get_non_empty_input("Enter Member ID : ")
+                isbn = get_non_empty_input("Enter Book ISBN : ")
+                library.borrow_book(member_id, isbn)
+            except (ValueError, LookupError) as e:
+                print(f"{e}")
 
-            elif choice == "3":
-                print("------ Borrow Book ------")
-                try:
-                    member_id = get_non_empty_input("Enter Member ID : ")
-                    isbn = get_non_empty_input("Enter Book ISBN : ")
-                    library.borrow_book(member_id, isbn)
-                except (ValueError, LookupError) as e:
-                    print(f"{e}")
+        elif choice == "4":
+            print("------ Return Book ------")
+            try:
+                member_id = get_non_empty_input("Enter Member ID : ")
+                isbn = get_non_empty_input("Enter Book ISBN : ")
+                library.return_book(member_id, isbn)
+            except (ValueError, LookupError) as e:
+                print(f"{e}")
 
-            elif choice == "4":
-                print("------ Return Book ------")
-                try:
-                    member_id = get_non_empty_input("Enter Member ID : ")
-                    isbn = get_non_empty_input("Enter Book ISBN : ")
-                    library.return_book(member_id, isbn)
-                except (ValueError, LookupError) as e:
-                    print(f"{e}")
+        elif choice == "5":
+            library.show_books()
 
-            elif choice == "5":
-                library.show_books()
+        elif choice == "6":
+            library.show_members()
 
-            elif choice == "6":
-                library.show_members()
+        elif choice == "7":
+            print("------ Search Book ------")
+            try:
+                title = get_non_empty_input("Enter Book Title : ")
+                library.search_book(title)
+            except ValueError as e:
+                print(f"Error: {e}")
 
-            elif choice == "7":
-                print("------ Search Book ------")
-                try:
-                    title = get_non_empty_input("Enter Book Title : ")
-                    library.search_book(title)
-                except ValueError as e:
-                    print(f"Error: {e}")
+        elif choice == "8":
+            print("Thank you for using Library Management System.")
+            print("Goodbye!")
+            break
 
-            elif choice == "8":
-                print("Thank you for using Library Management System.")
-                print("Goodbye!")
-                break
+        else:
+            print("Invalid choice! Please enter a number between 1 and 8.")
 
-            else:
-                print("Invalid choice! Please enter a number between 1 and 8.")
+    except ValueError:
+        # Catches invalid age input (non-numeric) and empty input
+        print("Error: Invalid input. Please try again.")
+    except Exception as e:
+        # Catches any unexpected runtime error so the program never crashes
+        print(f"Unexpected error: {e}")
 
-        except ValueError:
-            # Catches invalid age input (non-numeric) and empty input
-            print("Error: Invalid input. Please try again.")
-        except Exception as e:
-            # Catches any unexpected runtime error so the program never crashes
-            print(f"Unexpected error: {e}")
-
-        input("Press Enter to continue...")
-
-
-if __name__ == "__main__":
-    main()
+    input("Press Enter to continue...")
